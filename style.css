@@ -155,7 +155,7 @@ form button:hover {
 
 /*---alert error---*/
 
-.alert-error .open {
+.alert-error.open {
   visibility: visible;
   opacity: 1;
 

@@ -1,37 +1,38 @@
-import {Modal} from './modal.js'
-// variaveis
+import { Modal } from './modal.js'
+import { AlertError } from "./alert-error.js"
 
+// variáveis - variables
 const form = document.querySelector('form')
 const inputWeight = document.querySelector('#weight')
 const inputHeight = document.querySelector('#height')
 
-form.onsubmit = function(event) {
-  event.preventDefault()
 
-  const weight = inputWeight.value
-  const height = inputHeight.value
+form.onsubmit = event => {
+    event.preventDefault()
 
-  const showAlertError = notANumber(weight)  || notANumber(height)
+    const weight = inputWeight.value
+    const height = inputHeight.value
 
-  if(showAlertError) {
-    console.log('mostrar o alerta de erro')
-  }
+    const showAlertError = notANumber(weight) || notANumber(height)
 
-  const result = IMC(weight, height)
-  const message = `Seu IMC é de ${result}`
-  console.log(message)
+    if (showAlertError) {
+        AlertError.open()
+        return;
+    }
 
-  Modal.message.innerText = message
-  Modal.open()
+    AlertError.close()
+
+    const result = IMC(weight, height)
+    const message = `Seu IMC é de ${result}`
+
+    Modal.message.innerText = message
+    Modal.open()
 }
-
-//validando dados
 
 function notANumber(value) {
-  return isNaN(value)  || value == ""
+    return isNaN(value) || value == ""
 }
 
-
 function IMC(weight, height) {
-  return (weight / ((height / 100) ** 2)).toFixed(2)
+    return (weight / ((height / 100) ** 2)).toFixed(2)
 }
